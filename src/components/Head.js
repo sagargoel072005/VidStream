@@ -13,6 +13,7 @@ const Head = () => {
     <header className="fixed top-0 left-0 z-50 flex items-center justify-between px-6 py-4 bg-white shadow-md w-full">
       {/* Left - Menu and Logo */}
       <div className="flex items-center space-x-4">
+      
         <button className="p-2 hover:bg-gray-100 rounded" onClick={toggleMenuHandler}>
           <Menu size={24} />
         </button>

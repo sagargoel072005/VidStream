@@ -1,11 +1,11 @@
 import ButtonList from './ButtonList';
-import ViedoContainer from './ViedoContainer';
+import VideoContainer from './VideoContainer';
 
 const Maincontainer = () => {
   return (
     <div>
-        <ButtonList />
-      <ViedoContainer />
+      <ButtonList />
+      <VideoContainer />
     </div>
   );
 };
