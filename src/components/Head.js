@@ -1,16 +1,19 @@
 import { PlayCircle, Menu, Mic, Bell, PlusCircle, Search } from 'lucide-react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleMenu } from '../utils/appSlice';
 import { useEffect, useState, useRef } from 'react';
 import { YOU_TUBE_SEARCH_API } from '../utils/constants';
+import { cacheResults } from '../utils/searchSlice';
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const timerRef = useRef(null);
-  const inputRef = useRef(); // 🆕 input ref
+  const inputRef = useRef();
   const dispatch = useDispatch();
+
+  const searchCache = useSelector((store) => store.search);
 
   const proxy = "https://thingproxy.freeboard.io/fetch/";
 
@@ -18,7 +21,11 @@ const Head = () => {
     try {
       const response = await fetch(proxy + YOU_TUBE_SEARCH_API + query); // fixed
       const data = await response.json();
-      setSuggestions(data[1]);
+      setSuggestions(data[1]); // updates the component's state with the suggestions . data[1] contains the list of suggestion strings.
+      dispatch(cacheResults({
+        [searchQuery] : data[1]
+      }));
+
     } catch (err) {
       console.error("Fetch error:", err.message);
     }
@@ -31,10 +38,16 @@ const Head = () => {
     }
 
     if (timerRef.current) clearTimeout(timerRef.current);
+
     timerRef.current = setTimeout(() => {
-      getSearchSuggestions(searchQuery);
+      if (searchCache[searchQuery]) {
+        setSuggestions(searchCache[searchQuery]);
+      } else {
+        getSearchSuggestions(searchQuery);
+      }
     }, 300);
   }, [searchQuery]);
+
 
   const handleSuggestionClick = (s) => {
     setSearchQuery(s);
@@ -68,7 +81,7 @@ const Head = () => {
             setShowSuggestions(true);
           }}
           onFocus={() => setShowSuggestions(true)}
-         onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+          onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
         />
         <button className="p-2 hover:bg-gray-100 rounded-full">
           <Search size={20} />
@@ -83,7 +96,7 @@ const Head = () => {
               <li
                 key={index}
                 className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center"
-                onClick={() => handleSuggestionClick(s)}
+                onMouseDown={() => handleSuggestionClick(s)}
               >
                 <Search size={16} className="mr-2 text-gray-500" />
                 {s}
