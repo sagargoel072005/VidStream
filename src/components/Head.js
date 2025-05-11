@@ -1,16 +1,23 @@
-import React from 'react';
-import { PlayCircle, Menu, Mic, Bell, PlusCircle, Search } from 'lucide-react'; // npm install lucide-react
+import { PlayCircle, Menu, Mic, Bell, PlusCircle, Search } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { toggleMenu } from '../utils/appSlice';
 
 const Head = () => {
+  const dispatch = useDispatch();
+
+  const toggleMenuHandler = () => {
+    dispatch(toggleMenu());
+  };
+
   return (
-    <header className="flex items-center justify-between px-6 py-4 bg-white shadow-md w-full">
+    <header className="fixed top-0 left-0 z-50 flex items-center justify-between px-6 py-4 bg-white shadow-md w-full">
       {/* Left - Menu and Logo */}
       <div className="flex items-center space-x-4">
-        <button className="p-2 hover:bg-gray-100 rounded">
+        <button className="p-2 hover:bg-gray-100 rounded" onClick={toggleMenuHandler}>
           <Menu size={24} />
         </button>
         <div className="flex items-center space-x-2">
-          <PlayCircle size={32} color="red" />
+          <PlayCircle size={32} color="blue" />
           <span className="text-xl font-bold text-gray-800">VidStream</span>
         </div>
       </div>

@@ -1,35 +1,12 @@
-import React from 'react';
-import {
-  Home,
-  Flame,
-  History,
-  ListVideo,
-  Video,
-  GraduationCap,
-  Clock,
-  ThumbsUp,
-  ShoppingBag,
-  Music,
-  Clapperboard,
-  Radio,
-  Gamepad2,
-  Newspaper,
-  Dumbbell,
-  Shirt,
-  Mic2,
-  Crown,
-  Music2,
-  MonitorPlay,
-  Baby,
-  Settings,
-  Flag,
-  HelpCircle,
-  MessageSquare
-} from 'lucide-react';
+import { Home, Flame, History, ListVideo, Video, GraduationCap, Clock, ThumbsUp, ShoppingBag, Music, Clapperboard, Radio, Gamepad2, Newspaper, Dumbbell, Shirt, Mic2, Crown, Music2, MonitorPlay, Baby, Settings, Flag, HelpCircle, MessageSquare } from 'lucide-react';
+import { useSelector } from 'react-redux';
 
 const Sidebar = () => {
+  const isMenuOpen = useSelector((store) => store.app.isMenuOpen);
+  if (!isMenuOpen) return null;
+
   return (
-    <div className="w-64 bg-white h-screen overflow-y-auto p-4 border-r">
+    <div className="w-64 mt-20 bg-white h-screen overflow-y-auto p-4 border-r">
       <ul className="space-y-2">
         <li className="flex items-center gap-3 p-2 hover:bg-gray-100 cursor-pointer"><Home size={20} /> Home</li>
         <li className="flex items-center gap-3 p-2 hover:bg-gray-100 cursor-pointer"><Flame size={20} /> Shorts</li>
