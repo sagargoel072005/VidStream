@@ -1,6 +1,6 @@
 import { MoreVertical } from 'lucide-react';
 
-const VideoCard = ({ info = {} }) => {
+const SideVideoCard = ({ info = {} }) => {
   const { snippet = {}, statistics = {} } = info;
   const { channelTitle, title, thumbnails = {} } = snippet;
   const thumbnailUrl = thumbnails?.medium?.url;
@@ -34,4 +34,4 @@ const VideoCard = ({ info = {} }) => {
   );
 };
 
-export default VideoCard;
+export default SideVideoCard;

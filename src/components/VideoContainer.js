@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { YOU_TUBE_API } from '../utils/constants';
 import VideoCard from './VideoCard';
+import useOnlineStatus from '../utils/useOnlineStatus';
 import { Link } from 'react-router-dom';
 
 const VideoContainer = () => {
@@ -17,13 +18,20 @@ const VideoContainer = () => {
     getVideos();
   }, []);
 
+      const onlineStatus = useOnlineStatus();
+    if (!onlineStatus)
+        return (
+            <h1>Looks like you're offline !! Please check your internet connection</h1>
+        );
+
+
   return (
+
     <div className='m-4 flex flex-wrap justify-around'>
       {videos.map((video) => (
-        <Link key={video.id}  to={"/watch?v="+ video.id}>  
-                      <VideoCard info={video} />
+        <Link key={video.id} to={"/watch?v=" + video.id}>
+          <VideoCard info={video} />
         </Link>
-  
       ))}
     </div>
   );
