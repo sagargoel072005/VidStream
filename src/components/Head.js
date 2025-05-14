@@ -4,6 +4,7 @@ import { toggleMenu } from '../utils/appSlice';
 import { useEffect, useState, useRef } from 'react';
 import { YOU_TUBE_SEARCH_API } from '../utils/constants';
 import { cacheResults } from '../utils/searchSlice';
+import { Link } from 'react-router-dom';
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -14,18 +15,14 @@ const Head = () => {
   const dispatch = useDispatch();
 
   const searchCache = useSelector((store) => store.search);
-
   const proxy = "https://thingproxy.freeboard.io/fetch/";
 
   const getSearchSuggestions = async (query) => {
     try {
-      const response = await fetch(proxy + YOU_TUBE_SEARCH_API + query); // fixed
+      const response = await fetch(proxy + YOU_TUBE_SEARCH_API + query);
       const data = await response.json();
-      setSuggestions(data[1]); // updates the component's state with the suggestions . data[1] contains the list of suggestion strings.
-      dispatch(cacheResults({
-        [searchQuery] : data[1]
-      }));
-
+      setSuggestions(data[1]);
+      dispatch(cacheResults({ [searchQuery]: data[1] }));
     } catch (err) {
       console.error("Fetch error:", err.message);
     }
@@ -48,57 +45,61 @@ const Head = () => {
     }, 300);
   }, [searchQuery]);
 
-
   const handleSuggestionClick = (s) => {
     setSearchQuery(s);
     setShowSuggestions(false);
-    inputRef.current.focus(); // 🆕 focus input again
+    inputRef.current.focus();
   };
 
   const toggleMenuHandler = () => dispatch(toggleMenu());
 
   return (
-    <header className="fixed top-0 left-0 z-50 flex items-center justify-between px-6 py-4 bg-white shadow-md w-full">
-      <div className="flex items-center space-x-4">
-        <button className="p-2 hover:bg-gray-100 rounded" onClick={toggleMenuHandler}>
+    <header className="fixed top-0 left-0 z-50 w-full bg-white shadow-sm px-6 py-3 flex items-center justify-between">
+      {/* Logo and Menu */}
+      <div className="flex items-center gap-4">
+        <button onClick={toggleMenuHandler} className="p-2 rounded-full hover:bg-gray-100">
           <Menu size={24} />
         </button>
-        <div className="flex items-center space-x-2">
-          <PlayCircle size={32} color="blue" />
-          <span className="text-xl font-bold text-gray-800">VidStream</span>
+        <div className="flex items-center gap-2">
+          <PlayCircle size={32} className="text-blue-600" />
+          <h1 className="text-xl font-semibold text-gray-800">VidStream</h1>
         </div>
       </div>
 
-      <div className="relative flex items-center border rounded-full px-3 py-1 shadow-sm w-1/2 max-w-md bg-white">
-        <input
-          ref={inputRef} // 🆕 assign ref
-          type="text"
-          placeholder="Search"
-          className="flex-1 px-2 py-1 outline-none text-sm"
-          value={searchQuery}
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-            setShowSuggestions(true);
-          }}
-          onFocus={() => setShowSuggestions(true)}
-          onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-        />
-        <button className="p-2 hover:bg-gray-100 rounded-full">
-          <Search size={20} />
-        </button>
-        <button className="p-2 hover:bg-gray-100 rounded-full">
-          <Mic size={20} />
-        </button>
+      {/* Search Bar */}
+      <div className="relative flex-1 mx-6 max-w-2xl">
+        <div className="flex items-center bg-gray-100 border border-gray-300 rounded-full px-4 py-2 shadow-inner focus-within:ring-2 focus-within:ring-blue-500">
+          <input
+            ref={inputRef}
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={() => setShowSuggestions(true)}
+            placeholder="Search..."
+            className="flex-grow bg-transparent outline-none text-sm text-gray-800 placeholder-gray-500"
+          />
 
+          <Link to={`/results?search_query=${encodeURIComponent(searchQuery)}`} onClick={() => setShowSuggestions(false)}>
+            <button className="p-2 hover:bg-gray-200 rounded-full transition">
+              <Search size={18} className="text-gray-600" />
+            </button>
+          </Link>
+
+          <button className="p-2 hover:bg-gray-200 rounded-full transition">
+            <Mic size={18} className="text-gray-600" />
+          </button>
+        </div>
+
+        {/* Suggestions */}
         {showSuggestions && suggestions.length > 0 && (
-          <ul className="absolute top-12 left-0 bg-white w-full shadow-lg rounded-lg z-50 max-h-60 overflow-y-auto border">
+          <ul className="absolute left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg max-h-64 overflow-y-auto z-50">
             {suggestions.map((s, index) => (
               <li
                 key={index}
-                className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center"
                 onMouseDown={() => handleSuggestionClick(s)}
+                className="px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer flex items-center"
               >
-                <Search size={16} className="mr-2 text-gray-500" />
+                <Search size={16} className="mr-2 text-gray-400" />
                 {s}
               </li>
             ))}
@@ -106,12 +107,13 @@ const Head = () => {
         )}
       </div>
 
-      <div className="flex items-center space-x-4">
-        <button className="hover:bg-gray-100 p-2 rounded-full">
-          <Bell size={24} />
+      {/* Action Icons */}
+      <div className="flex items-center gap-4">
+        <button className="p-2 rounded-full hover:bg-gray-100">
+          <Bell size={22} />
         </button>
-        <button className="hover:bg-gray-100 p-2 rounded-full">
-          <PlusCircle size={24} />
+        <button className="p-2 rounded-full hover:bg-gray-100">
+          <PlusCircle size={22} />
         </button>
       </div>
     </header>

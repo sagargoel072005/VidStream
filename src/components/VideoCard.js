@@ -16,13 +16,11 @@ const VideoCard = ({ info = {} }) => {
         className="rounded-lg w-full h-40 object-cover"
       />
       <div className="flex mt-2 items-start space-x-3">
-
         <img
           src={defaultThumb}
           alt="channel icon"
           className="w-9 h-9 rounded-full"
         />
-
         <div className="flex-1">
           <p className="font-semibold text-sm leading-tight">{title}</p>
           <p className="text-xs text-gray-600">{channelTitle}</p>
