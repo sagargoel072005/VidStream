@@ -21,9 +21,9 @@ const ResultsPage = () => {
   }, [searchQuery]);
 
   return (
-    <div className="mt-20 px-6">
+    <div className="mt-20">
       <h2 className="text-xl font-semibold mb-4">Results for: {searchQuery}</h2>
-      <div className="m-4 flex flex-wrap justify-around">
+      <div className="m-4 flex flex-wrap justify-between">
         {videos.map((video) => (
               <Link key={video.id.videoId} to={"/watch?v=" + video.id.videoId}>
           <VideoCard key={video.id.videoId} info={video} />

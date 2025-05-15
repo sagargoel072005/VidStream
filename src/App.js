@@ -7,25 +7,29 @@ import WatchPage from "./components/WatchPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Maincontainer from "./components/Maincontainer";
 import ResultsPage from './components/ResultsPage';
+import YouTubeShorts from "./components/YouTubeShorts";
 
 const appRouter = createBrowserRouter([{
   path: "/",
-    element: (
-      <>
-        <Head />
-        <Body />
-      </>
-    ),
+  element: (
+    <>
+      <Head />
+      <Body />
+    </>
+  ),
   children: [
     {
       path: "/",
       element: <Maincontainer />
-    },{
+    }, {
       path: "/watch",
       element: <WatchPage />
-    },{
-      path:"/results",
-       element:<ResultsPage />
+    }, {
+      path: "/results",
+      element: <ResultsPage />
+    }, {
+      path: "/shorts",
+      element: <YouTubeShorts />
     }
   ]
 

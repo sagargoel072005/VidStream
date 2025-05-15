@@ -9,7 +9,7 @@ const VideoCard = ({ info = {} }) => {
   if (!title || !channelTitle || !thumbnailUrl) return null;
 
   return (
-    <div className="w-72">
+    <div className="w-80 m-1">
       <img
         src={thumbnailUrl}
         alt="video thumbnail"
@@ -22,9 +22,15 @@ const VideoCard = ({ info = {} }) => {
           className="w-9 h-9 rounded-full"
         />
         <div className="flex-1">
-          <p className="font-semibold text-sm leading-tight">{title}</p>
-          <p className="text-xs text-gray-600">{channelTitle}</p>
-          <p className="text-xs text-gray-500">{statistics.viewCount}</p>
+          <p className="font-semibold text-sm leading-tight">
+            {title.split(' ').slice(0, 7).join(' ')}
+            {title.split(' ').length > 7 ? '...' : ''}
+          </p>
+          <div className='flex gap-4'>
+            <p className="text-xs text-gray-600">{channelTitle}</p>
+            <p className="text-xs text-gray-500">{(statistics.viewCount / 1000000).toFixed(1)}M views</p>
+          </div>
+
         </div>
         <MoreVertical className="w-5 h-5 text-gray-600 mt-1" />
       </div>

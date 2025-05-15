@@ -1,22 +1,26 @@
+// ButtonList.jsx
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 const ButtonList = () => {
-    return (
-        <div className="flex mt-20">
-            <Button name="All" />
-            <Button name="C++" />
-            <Button name="Java" />
-            <Button name="Python" />
-            <Button name="JavaScript" />
-            <Button name="Computer programming" />
-            <Button name="Web Development" />
-            <Button name="Watched" />
-            <Button name="Recently Uploaded" />
-            <Button name="Animated Films" />
-            <Button name="Movie musicals" />
-  
-        </div>
-    );
-}
+  const navigate = useNavigate();
+
+  const handleButtonClick = (query) => {
+    navigate(`/results?search_query=${encodeURIComponent(query)}`);
+  };
+
+  const topics = [
+    "All", "C++", "Java", "Python", "JavaScript", "Computer programming",
+    "Web Development", "Watched", "Recently Uploaded", "Animated Films", "Movie musicals"
+  ];
+
+  return (
+    <div className="flex flex-wrap justify-center mt-20">
+      {topics.map((topic) => (
+        <Button key={topic} name={topic} onClick={handleButtonClick} />
+      ))}
+    </div>
+  );
+};
 
 export default ButtonList;

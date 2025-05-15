@@ -20,7 +20,7 @@ const Sidebar = () => {
         {/* Top Links */}
         <ul className="space-y-2">
           <li className="flex items-center gap-3 p-2 hover:bg-gray-100 cursor-pointer"><Home size={20} /><Link to="/">Home</Link></li>
-          <li className="flex items-center gap-3 p-2 hover:bg-gray-100 cursor-pointer"><Flame size={20} /> Shorts</li>
+          <li className="flex items-center gap-3 p-2 hover:bg-gray-100 cursor-pointer"><Flame size={20} /><Link to="/shorts"> Shorts</Link></li>
           <li
             className="flex items-center gap-3 p-2 hover:bg-gray-100 cursor-pointer"
             onClick={() => setShowSubscriptions(!showSubscriptions)}
