@@ -133,12 +133,12 @@ const Comment = ({ data }) => {
   return (
     <div className="flex items-start gap-3 p-3 my-2 bg-gray-100 rounded-xl shadow-md">
       <img
-        className="w-12 h-12 rounded-full"
+        className="w-12 h-12 rounded-full transition-colors"
         alt="user"
         src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"
       />
       <div className="flex-1">
-        <p className="font-semibold text-lg">{name} {getRandomEmoji()}</p>
+        <p className="font-semibold text-lg  dark:text-black transition-colors">{name} {getRandomEmoji()}</p>
         <p className="text-gray-700">{text}</p>
         <div className="flex gap-3 mt-2 text-gray-600">
           <ThumbsUp className="w-5 h-5 cursor-pointer hover:text-blue-600" />
@@ -162,7 +162,7 @@ const CommentList = ({ comments }) => {
 
 const CommentContainer = () => {
   return (
-    <div className="mt-6 bg-white rounded-xl">
+    <div className="mt-6 bg-white rounded-xl dark:bg-gray-900 text-black dark:text-white transition-colors">
       <h1 className="text-2xl text-blue-700 font-bold mb-4">Comments:</h1>
       <CommentList comments={commentsData} />
     </div>

@@ -38,7 +38,7 @@ const LiveChat = () => {
   return (
     <div className="w-full px-4 space-y-6">
       {/* Live Chat Box */}
-      <div className="h-[550px] p-4 border border-gray-300 bg-white rounded-lg shadow-md flex flex-col">
+      <div className="h-[550px] p-4 border border-gray-300 bg-white rounded-lg shadow-md flex flex-col dark:bg-gray-900 dark:text-white transition-colors duration-300">
         <h2 className="text-lg font-bold mb-2 text-blue-600">Live Chat</h2>
         <div className="flex-1 overflow-y-scroll flex flex-col-reverse space-y-2">
           {chatMessages.map((c, i) => (

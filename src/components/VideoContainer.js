@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { YOU_TUBE_API } from '../utils/constants';
 import VideoCard from './VideoCard';
-import useOnlineStatus from '../utils/useOnlineStatus';
+import useOnlineStatus from '../hooks/useOnlineStatus';
 import { Link } from 'react-router-dom';
 
 const VideoContainer = () => {

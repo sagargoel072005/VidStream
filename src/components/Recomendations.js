@@ -50,7 +50,7 @@ const SideVideoContainer = () => {
   }, []);
 
   return (
-    <div className="p-4 flex flex-col gap-4 w-full">
+    <div className="p-4 flex flex-col gap-4 w-full dark:bg-gray-900 dark:text-white transition-colors duration-300">
 
       {videos.map((video) => (
          <Link key={video.id} to={"/watch?v=" + video.id}>

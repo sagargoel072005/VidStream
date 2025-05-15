@@ -1,3 +1,4 @@
+// Head.jsx
 import {
   PlayCircle,
   Menu,
@@ -5,6 +6,8 @@ import {
   Bell,
   PlusCircle,
   Search,
+  Moon,
+  Sun,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
@@ -12,9 +15,11 @@ import { useEffect, useState, useRef } from "react";
 import { YOU_TUBE_SEARCH_API } from "../utils/constants";
 import { cacheResults } from "../utils/searchSlice";
 import { Link, useLocation } from "react-router-dom";
+import useDarkMode from "../hooks/useDarkMode";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isDark, setIsDark] = useDarkMode();
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isListening, setIsListening] = useState(false);
@@ -27,7 +32,6 @@ const Head = () => {
   const searchCache = useSelector((store) => store.search);
   const proxy = "https://thingproxy.freeboard.io/fetch/";
 
-  // Fetch search suggestions
   const getSearchSuggestions = async (query) => {
     try {
       const response = await fetch(proxy + YOU_TUBE_SEARCH_API + query);
@@ -39,7 +43,6 @@ const Head = () => {
     }
   };
 
-  // Debounce logic for fetching suggestions
   useEffect(() => {
     if (!searchQuery.trim()) {
       setSuggestions([]);
@@ -57,7 +60,6 @@ const Head = () => {
     }, 300);
   }, [searchQuery]);
 
-  // Hide suggestions when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (searchRef.current && !searchRef.current.contains(e.target)) {
@@ -69,7 +71,6 @@ const Head = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Clear search on route change
   useEffect(() => {
     setSearchQuery("");
     setSuggestions([]);
@@ -84,7 +85,6 @@ const Head = () => {
 
   const toggleMenuHandler = () => dispatch(toggleMenu());
 
-  // Voice search
   const startListening = () => {
     if ("webkitSpeechRecognition" in window) {
       const recognition = new window.webkitSpeechRecognition();
@@ -92,26 +92,15 @@ const Head = () => {
       recognition.interimResults = false;
       recognition.maxAlternatives = 1;
 
-      recognition.onstart = () => {
-        setIsListening(true);
-      };
-
+      recognition.onstart = () => setIsListening(true);
       recognition.onresult = (event) => {
         const voiceInput = event.results[0][0].transcript;
         setSearchQuery(voiceInput);
         setIsListening(false);
         inputRef.current.focus();
       };
-
-      recognition.onerror = (event) => {
-        console.error("Speech recognition error", event.error);
-        setIsListening(false);
-      };
-
-      recognition.onend = () => {
-        setIsListening(false);
-      };
-
+      recognition.onerror = () => setIsListening(false);
+      recognition.onend = () => setIsListening(false);
       recognition.start();
     } else {
       alert("Speech recognition is not supported in this browser");
@@ -119,24 +108,19 @@ const Head = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 z-50 w-full bg-white shadow-sm px-6 py-3 flex items-center justify-between">
-      {/* Logo and Menu */}
+    <header className="fixed top-0 left-0 z-50 w-full bg-white dark:bg-gray-900 text-gray-800 dark:text-white shadow-sm px-6 py-3 flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <button
-          onClick={toggleMenuHandler}
-          className="p-2 rounded-full hover:bg-gray-100"
-        >
+        <button onClick={toggleMenuHandler} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
           <Menu size={24} />
         </button>
         <div className="flex items-center gap-2">
           <PlayCircle size={32} className="text-blue-600" />
-          <h1 className="text-xl font-semibold text-gray-800">VidStream</h1>
+          <h1 className="text-xl font-semibold">VidStream</h1>
         </div>
       </div>
 
-      {/* Search Bar */}
       <div className="relative flex-1 mx-6 max-w-2xl" ref={searchRef}>
-        <div className="flex items-center bg-gray-100 border border-gray-300 rounded-full px-4 py-2 shadow-inner focus-within:ring-2 focus-within:ring-blue-500">
+        <div className="flex items-center bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-full px-4 py-2 shadow-inner focus-within:ring-2 focus-within:ring-blue-500">
           <input
             ref={inputRef}
             type="text"
@@ -144,37 +128,30 @@ const Head = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setShowSuggestions(true)}
             placeholder="Search..."
-            className="flex-grow bg-transparent outline-none text-sm text-gray-800 placeholder-gray-500"
+            className="flex-grow bg-transparent outline-none text-sm placeholder-gray-500 dark:placeholder-gray-400"
           />
 
           <Link
             to={`/results?search_query=${encodeURIComponent(searchQuery)}`}
             onClick={() => setShowSuggestions(false)}
           >
-            <button className="p-2 hover:bg-gray-200 rounded-full transition">
-              <Search size={18} className="text-gray-600" />
+            <button className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition">
+              <Search size={18} />
             </button>
           </Link>
 
-          <button
-            className="p-2 hover:bg-gray-200 rounded-full transition"
-            onClick={startListening}
-          >
-            <Mic
-              size={18}
-              className={`text-gray-600 ${isListening ? "text-blue-600" : ""}`}
-            />
+          <button className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition" onClick={startListening}>
+            <Mic size={18} className={isListening ? "text-blue-600" : ""} />
           </button>
         </div>
 
-        {/* Suggestions */}
         {showSuggestions && suggestions.length > 0 && (
-          <ul className="absolute left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg max-h-64 overflow-y-auto z-50">
+          <ul className="absolute left-0 right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-64 overflow-y-auto z-50">
             {suggestions.map((s, index) => (
               <li
                 key={index}
                 onMouseDown={() => handleSuggestionClick(s)}
-                className="px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer flex items-center"
+                className="px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center"
               >
                 <Search size={16} className="mr-2 text-gray-400" />
                 {s}
@@ -184,13 +161,15 @@ const Head = () => {
         )}
       </div>
 
-      {/* Action Icons */}
       <div className="flex items-center gap-4">
-        <button className="p-2 rounded-full hover:bg-gray-100">
+        <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
           <Bell size={22} />
         </button>
-        <button className="p-2 rounded-full hover:bg-gray-100">
+        <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
           <PlusCircle size={22} />
+        </button>
+        <button onClick={() => setIsDark(!isDark)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+          {isDark ? <Sun size={20} /> : <Moon size={20} />}
         </button>
       </div>
     </header>

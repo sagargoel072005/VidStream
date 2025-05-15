@@ -15,7 +15,7 @@ const Sidebar = () => {
   if (!isMenuOpen) return null;
 
   return (
-    <div className="w-64 h-screen bg-white border-r mt-0 flex flex-col">
+    <div className="w-64 h-screen bg-white border-r mt-0 flex flex-col dark:bg-gray-900 dark:text-white transition-colors duration-300">
       <div className="overflow-y-auto h-full p-4 mt-20">
         {/* Top Links */}
         <ul className="space-y-2">

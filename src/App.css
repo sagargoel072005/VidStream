@@ -27,3 +27,13 @@
 #root {
   height: 100%;
 }
+
+body {
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Not required if you're using Tailwind utility classes fully, but good fallback */
+.dark body {
+  background-color: #111827; /* Tailwind gray-900 */
+  color: #fff;
+}

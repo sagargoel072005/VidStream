@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Maincontainer from "./components/Maincontainer";
 import ResultsPage from './components/ResultsPage';
 import YouTubeShorts from "./components/YouTubeShorts";
+import useDarkMode from "./hooks/useDarkMode";
 
 const appRouter = createBrowserRouter([{
   path: "/",
@@ -35,11 +36,12 @@ const appRouter = createBrowserRouter([{
 
 }])
 
-
 function App() {
+  const [isDark] = useDarkMode(); // ✅ to keep mode persistent
+
   return (
     <Provider store={store}>
-      <div>
+      <div className="min-h-screen bg-white text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
         <RouterProvider router={appRouter} />
       </div>
     </Provider>
