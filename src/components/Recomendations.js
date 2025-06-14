@@ -3,7 +3,7 @@ import { YOU_TUBE_API } from '../utils/constants';
 import { Link } from 'react-router-dom';
 
 const SideVideoCard = ({ info = {} }) => {
-  const { snippet = {}, statistics = {}, id } = info;
+  const { snippet = {}, statistics = {} } = info;
   const { channelTitle, title, thumbnails = {}, publishedAt } = snippet;
   const thumbnailUrl = thumbnails?.medium?.url;
 
