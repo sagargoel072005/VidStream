@@ -10,6 +10,10 @@ const VideoContainer = () => {
   const getVideos = async () => {
     const data = await fetch(YOU_TUBE_API);
     const json = await data.json();
+    if (!YOU_TUBE_API) {
+  console.error("YouTube API URL is undefined!");
+}
+
     setVideos(json.items);
   };
 

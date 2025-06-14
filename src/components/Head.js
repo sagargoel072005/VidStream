@@ -33,7 +33,9 @@ const Head = () => {
   const getSearchSuggestions = async (query) => {
     try {
       const response = await fetch(proxy + YOU_TUBE_SEARCH_API + query);
+
       const data = await response.json();
+      console.log("YouTube API URL:", response);
       setSuggestions(data[1]);
       dispatch(cacheResults({ [query]: data[1] }));
     } catch (err) {
