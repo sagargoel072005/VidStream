@@ -9,7 +9,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Maincontainer from "./components/Maincontainer";
 import ResultsPage from './components/ResultsPage';
 import YouTubeShorts from "./components/YouTubeShorts";
-import useDarkMode from "./hooks/useDarkMode";
 import Trending from "./links/Trending";
 import Shopping from "./links/Shopping";
 import Music from "./links/Music";
