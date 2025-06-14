@@ -20,7 +20,7 @@ const LiveChat = () => {
       );
     }, 1500);
     return () => clearInterval(i);
-  }, []);
+  }, [dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -98,7 +98,6 @@ const appRouter = createBrowserRouter([{
 }])
 
 function App() {
-  const [isDark] = useDarkMode(); // ✅ to keep mode persistent
 
   return (
     <Provider store={store}>
