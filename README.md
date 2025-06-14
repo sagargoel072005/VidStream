@@ -76,3 +76,12 @@ const SideVideoCard = ({ info = {} }) => {
 };
 
 export default SideVideoCard;
+Focus/blur: Uses ref to focus or blur the input.
+
+Dark mode toggle: Reuses your setIsDark logic.
+
+Mic: Calls startListening.
+
+Enter: Simulates search trigger by redirecting.
+
+Esc: Hides suggestion box.

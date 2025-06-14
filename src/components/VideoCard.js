@@ -28,7 +28,11 @@ const VideoCard = ({ info = {} }) => {
           </p>
           <div className='flex gap-4'>
             <p className="text-xs text-gray-600">{channelTitle}</p>
-            <p className="text-xs text-gray-500">{(statistics.viewCount / 1000000).toFixed(1)}M views</p>
+            <p className="text-xs text-gray-500">
+              {statistics?.viewCount
+                ? `${(statistics.viewCount / 1000000).toFixed(1)}M views`
+                : "No views"}
+            </p>
           </div>
 
         </div>

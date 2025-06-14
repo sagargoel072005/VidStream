@@ -4,7 +4,6 @@ const Shimmer = () => {
       {/* Title Placeholder */}
       <div className="animate-pulse">
         <div className="h-8 w-64 bg-gray-300 rounded-md mb-6"></div>
-
         {/* Movie Card Placeholders */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {Array(8)

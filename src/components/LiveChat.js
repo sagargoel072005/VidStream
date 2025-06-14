@@ -65,7 +65,7 @@ const LiveChat = () => {
 
       {/* Recommended Videos */}
       <div>
-        <h1 className="text-2xl font-bold mb-4 text-blue-700">Recommended Videos</h1>
+        <h1 className="text-2xl font-bold mb-4 text-blue-700">More like this</h1>
 
         <div className="max-h-[2330px] overflow-y-auto p-1 border border-gray-300 bg-white rounded-lg shadow-md space-y-4">
           <SideVideoContainer />
