@@ -58,7 +58,7 @@ const Head = () => {
         getSearchSuggestions(searchQuery);
       }
     }, 300);
-  }, [getSearchSuggestions , searchCache ]);
+  }, [getSearchSuggestions , searchCache , searchQuery ]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -102,7 +102,7 @@ const Head = () => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [setIsDark]);
+  }, [setIsDark , searchQuery]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
