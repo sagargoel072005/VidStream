@@ -8,35 +8,47 @@ const VideoContainer = () => {
   const [videos, setVideos] = useState([]);
 
   const getVideos = async () => {
+      try {
     const data = await fetch(YOU_TUBE_API);
     const json = await data.json();
-    if (!YOU_TUBE_API) {
-  console.error("YouTube API URL is undefined!");
-}
+    if (!json?.items || !Array.isArray(json.items)) {
+      console.error("Invalid API response:", json);
+      setVideos([]); // prevent crash
+      return;
+    }
 
     setVideos(json.items);
+     } catch (error) {
+    console.error("Failed to fetch videos:", error);
+    setVideos([]); // fallback to empty array
+  }
   };
 
   useEffect(() => {
     getVideos();
   }, []);
 
-      const onlineStatus = useOnlineStatus();
-    if (!onlineStatus)
-        return (
-            <h1>Looks like you're offline !! Please check your internet connection</h1>
-        );
+  const onlineStatus = useOnlineStatus();
+  if (!onlineStatus)
+    return (
+      <h1>Looks like you're offline !! Please check your internet connection</h1>
+    );
 
 
   return (
 
-    <div className='m-5 flex flex-wrap justify-around'>
-      {videos.map((video) => (
-        <Link key={video.id} to={"/watch?v=" + video.id}>
-          <VideoCard info={video} />
-        </Link>
-      ))}
-    </div>
+   <div className='m-5 flex flex-wrap justify-around'>
+  {videos.length > 0 ? (
+    videos.map((video) => (
+      <Link key={video.id} to={"/watch?v=" + video.id}>
+        <VideoCard info={video} />
+      </Link>
+    ))
+  ) : (
+    <p>Loading videos...</p>
+  )}
+</div>
+
   );
 };
 
