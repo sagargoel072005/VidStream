@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { GOOGLE_API_KEY } from "../utils/constants";
 import VideoCard from "../components/VideoCard";
 
-const proxy = "https://thingproxy.freeboard.io/fetch/";
+const proxy = "https://cors-anywhere.herokuapp.com/";
 const YOUTUBE_SPORTS_API = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&videoCategoryId=26&regionCode=IN&maxResults=20&key=${GOOGLE_API_KEY}`;
 
 const Fashion = () => {
