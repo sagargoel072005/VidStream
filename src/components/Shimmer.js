@@ -1,29 +1,32 @@
 const Shimmer = () => {
   return (
-    <div className="p-4 sm:p-6">
-      {/* Title Placeholder */}
-      <div className="animate-pulse space-y-6">
-        <div className="h-6 sm:h-8 w-48 sm:w-64 bg-gray-300 dark:bg-gray-700 rounded"></div>
+    <div className="m-5 flex flex-wrap justify-around gap-4">
+      {Array(8)
+        .fill(0)
+        .map((_, index) => (
+          <div
+            key={index}
+            className="w-80 animate-pulse rounded-lg overflow-hidden"
+          >
+            {/* Thumbnail Placeholder */}
+            <div className="w-full h-40 bg-gray-300 dark:bg-gray-700 rounded-lg"></div>
 
-        {/* Movie Card Placeholders */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
-          {Array.from({ length: 12 }).map((_, index) => (
-            <div
-              key={index}
-              className="space-y-2 sm:space-y-3 animate-pulse"
-            >
-              {/* Image Placeholder */}
-              <div className="h-32 sm:h-40 md:h-48 bg-gray-300 dark:bg-gray-700 rounded-md"></div>
+            {/* Video Info Placeholder */}
+            <div className="flex mt-2 items-start space-x-3">
+              {/* Channel Icon */}
+              <div className="w-9 h-9 rounded-full bg-gray-300 dark:bg-gray-700"></div>
 
-              {/* Title Placeholder */}
-              <div className="h-4 sm:h-5 w-32 sm:w-40 bg-gray-300 dark:bg-gray-700 rounded"></div>
+              <div className="flex-1 space-y-2">
+                {/* Title lines */}
+                <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-3/4"></div>
+                <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/2"></div>
 
-              {/* Subtitle Placeholder */}
-              <div className="h-3 sm:h-4 w-20 sm:w-28 bg-gray-300 dark:bg-gray-700 rounded"></div>
+                {/* Subtitle line */}
+                <div className="h-3 bg-gray-300 dark:bg-gray-700 rounded w-1/3"></div>
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
+        ))}
     </div>
   );
 };
