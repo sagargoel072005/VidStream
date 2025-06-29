@@ -1,45 +1,35 @@
-import { MoreVertical } from 'lucide-react';
-
-const VideoCard = ({ info = {} }) => {
-  const { snippet = {}, statistics = {} } = info;
-  const { channelTitle, title, thumbnails = {} } = snippet;
-  const thumbnailUrl = thumbnails?.medium?.url;
-  const defaultThumb = thumbnails?.default?.url;
-
-  if (!title || !channelTitle || !thumbnailUrl) return null;
-
+const Shimmer = () => {
   return (
-    <div className="w-80 m-1">
-      <img
-        src={thumbnailUrl}
-        alt="video thumbnail"
-        className="rounded-lg w-full h-40 object-cover"
-      />
-      <div className="flex mt-2 items-start space-x-3">
-        <img
-          src={defaultThumb}
-          alt="channel icon"
-          className="w-9 h-9 rounded-full"
-        />
-        <div className="flex-1">
-          <p className="font-semibold text-sm leading-tight">
-            {title.split(' ').slice(0, 7).join(' ')}
-            {title.split(' ').length > 7 ? '...' : ''}
-          </p>
-          <div className='flex gap-4'>
-            <p className="text-xs text-gray-600">{channelTitle}</p>
-            <p className="text-xs text-gray-500">
-              {statistics?.viewCount
-                ? `${(statistics.viewCount / 1000000).toFixed(1)}M views`
-                : "No views"}
-            </p>
-          </div>
+    <div className="m-5 flex flex-wrap justify-around gap-4">
+      {Array(8)
+        .fill(0)
+        .map((_, index) => (
+          <div
+            key={index}
+            className="w-80 animate-pulse rounded-lg overflow-hidden"
+          >
+            {/* Thumbnail Placeholder */}
+            <div className="w-full h-40 bg-gray-300 dark:bg-gray-700 rounded-lg"></div>
 
-        </div>
-        <MoreVertical className="w-5 h-5 text-gray-600 mt-1" />
-      </div>
+            {/* Video Info Placeholder */}
+            <div className="flex mt-2 items-start space-x-3">
+              {/* Channel Icon */}
+              <div className="w-9 h-9 rounded-full bg-gray-300 dark:bg-gray-700"></div>
+
+              <div className="flex-1 space-y-2">
+                {/* Title lines */}
+                <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-3/4"></div>
+                <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/2"></div>
+
+                {/* Subtitle line */}
+                <div className="h-3 bg-gray-300 dark:bg-gray-700 rounded w-1/3"></div>
+              </div>
+            </div>
+          </div>
+        ))}
     </div>
   );
 };
 
-export default VideoCard;
+export default Shimmer;
+

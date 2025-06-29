@@ -3,6 +3,7 @@ import { YOU_TUBE_API } from '../utils/constants';
 import VideoCard from './VideoCard';
 import useOnlineStatus from '../hooks/useOnlineStatus';
 import { Link } from 'react-router-dom';
+import Shimmer from './Shimmer';
 
 const VideoContainer = () => {
   const [videos, setVideos] = useState([]);
@@ -45,7 +46,7 @@ const VideoContainer = () => {
       </Link>
     ))
   ) : (
-    <p>Loading videos...</p>
+    <Shimmer />
   )}
 </div>
 
